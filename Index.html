@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Coco 💖</title>
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #ffe6eb, #fff);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      position: relative;
+      width: 260px;
+      height: 160px;
+    }
+
+    button {
+      padding: 14px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #yes {
+      background-color: #ff6f91;
+      color: white;
+    }
+
+    #no {
+      background-color: #ffd6e0;
+      color: #555;
+      position: absolute;
+      left: 80px;
+      top: 80px;
+    }
+
+    #yes:hover {
+      transform: scale(1.05);
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Hidden message */
+    #surprise {
+      display: none;
+    }
+
+    img {
+      width: 220px;
+      border-radius: 16px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="main">
+    <h1>Coco 🌸</h1>
+    <p>Will you be my Valentine? 🌹<br>— Batta 💖</p>
+
+    <div class="buttons">
+      <button id="yes" onclick="yesClicked()">Yes 💕</button>
+      <button id="no" onclick="moveNo()">No 🙈</button>
+    </div>
+  </div>
+
+  <div id="surprise">
+    <h1>YAYYYYY 💘</h1>
+    <p>Weheeeeee 🎉🥰<br>
+       Mine Mine Mine 💖</p>
+
+    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmpnb2Foc3ExdmJ5M21kYmNvc2VpdDhubWppbzloMTl5YTBmeDRyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pa37AAGzKXoek/giphy.gif" alt="cute cat" />
+
+    <p>Happy Valentine’s Day, Coco 🌷</p>
+  </div>
+
+  <script>
+    /* No button runs away */
+    function moveNo() {
+      const noBtn = document.getElementById("no");
+      const x = Math.random() * 160;
+      const y = Math.random() * 120;
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    /* Floating hearts */
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (16 + Math.random() * 20) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 500);
+
+    /* Soft pop sound */
+    function playPop() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.value = 600;
+      gain.gain.value = 0.2;
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start();
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.stop(ctx.currentTime + 0.15);
+    }
+
+    /* Yes clicked */
+    function yesClicked() {
+      playPop();
+      document.getElementById("main").style.display = "none";
+      document.getElementById("surprise").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
